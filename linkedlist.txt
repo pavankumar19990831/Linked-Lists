@@ -1,0 +1,145 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node*link;
+};
+void append();
+void addatbegin();
+void addafter();
+int length();
+void display();
+void delet();
+
+struct node*root;//default is null
+void append()
+{
+    struct node *temp;int i;
+    temp=(struct node*)malloc(sizeof(struct node));//type cast
+    
+    scanf("%d",&temp->data);
+    temp->link=NULL;
+    if(root==NULL)
+    {
+    root=temp;
+    }
+    else  {
+            struct node*p;
+            p=root;
+            while(p->link!=NULL)
+            {
+                p=p->link;
+            }
+            p->link=temp;
+
+        }
+}
+int len=0;
+int length()
+{
+    int count=0;
+    struct node*temp;//local pointer
+    temp=root;
+    while(temp!=NULL)
+    {
+        temp=temp->link;
+        count++;
+    }
+    return count;
+}
+void display()
+{
+struct node*temp=root;
+if(temp==NULL)
+{
+    printf("no nodes");
+}
+else
+{
+    while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->link;
+    }
+}
+}
+int main()
+{
+    int ch,i=0;
+while(1)
+{
+    scanf("%d",&ch);
+switch(ch)
+{
+    case 1:append();
+    break;
+    case 2:addatbegin();
+    break;
+    case 3:addafter();
+    break;
+    case 4:len=length();
+    printf("%d",len);
+    break;
+    case 5:display();
+    break;
+    case 6:delet();
+    break;
+    case 7:exit(0);
+    break;
+    default:printf("invalid");
+}
+i++;
+}
+    return 0;
+}
+void addatbegin()
+{
+struct node*temp,*p=root;
+temp=(struct node*)malloc(sizeof(struct node));
+scanf("%d",&temp->data);
+if(p==NULL)
+{
+    root=temp;
+    p=temp;
+}
+else  {
+    temp->link=p;
+    p=temp;
+    root=p;
+}
+}
+void addafter()
+{int pos;
+struct node*temp,*p=root;
+temp=(struct node*)malloc(sizeof(struct node));
+scanf("%d%d",&pos,&temp->data);
+
+int i=1;
+while(i<pos-1)
+{
+    p=p->link;i++;
+}
+temp->link=p->link;
+p->link=temp;
+}
+void delet()
+{
+int n;
+scanf("%d",&n);
+struct node *prev,*p=root;
+while(p&&p->data!=n)
+{
+    prev=p;
+    p=p->link;
+}
+if(p==NULL)
+{
+printf("no element to delete");
+}
+else  {
+prev->link=p->link;
+free(p);
+}
+}

@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node 
+{
+    int data;
+    struct node*link;
+};
+struct node *front,*rear;int len;
+int length()
+{
+    struct node *temp=rear;int c=0;
+    while(temp!=NULL)
+    {
+        c++;
+        temp=temp->link;
+    }
+return c;
+}
+void append()
+{
+struct node*temp,*p;
+temp=(struct node*)malloc(sizeof(struct node));
+scanf("%d",&temp->data);
+temp->link=NULL;
+if(front==NULL&&rear==NULL)
+{
+    front=temp;
+    rear=temp;
+}
+else
+{
+    front->link=temp;
+    front=temp;
+}
+}
+void display()
+{
+    struct node*temp=rear;
+    if(rear)
+    {
+    while(temp)
+    {
+        printf("%d ",temp->data);
+        temp=temp->link;
+    }
+    }
+    else
+    {
+        printf("No elements");
+    }
+    printf("\n");
+}
+void delet()
+{
+struct node*temp=rear;
+
+if(rear->link)
+{
+    temp=temp->link;
+    rear=NULL;
+    free(rear);
+    rear=temp;
+}
+else
+{
+    printf("Queue Underflow");
+}
+}
+
+
+int len;
+int main()
+{
+    int i;
+    while(1)
+    {
+        scanf("%d",&i);
+        switch(i)
+        {
+        case 1:append();
+        break;
+        case 2:length();
+        break;
+        case 4:delet();
+        break;
+        case 5:display();
+        break;
+        case 6:exit(0);
+        break;
+        default:printf("Invalid");
+        break;
+        }
+    }
+}

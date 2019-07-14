@@ -1,0 +1,87 @@
+#include <assert.h>
+#include <limits.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct node 
+{
+    int data;
+    struct node*link;
+};
+struct node *top;int len;
+int length()
+{
+    struct node *temp=top;int c=0;
+    while(temp!=NULL)
+    {
+        c++;
+        temp=temp->link;
+    }
+return c;
+}
+void append()
+{
+struct node*temp,*p;
+temp=(struct node*)malloc(sizeof(struct node));
+scanf("%d",&temp->data);
+temp->link=top;
+top=temp;
+}
+void display()
+{
+    struct node*temp=top;
+    while(temp)
+    {
+        printf("%d ",temp->data);
+        temp=temp->link;
+    }
+    printf("\n");
+}
+void delet()
+{
+struct node *temp,*p;
+int i,j=1;
+temp=top;
+if(temp->link)
+{
+temp=temp->link;
+top=NULL;
+free(top);
+top=temp;
+}
+else
+{
+printf("Stack Underflow");
+}
+}
+
+
+int len;
+int main()
+{
+    int i;
+    while(1)
+    {
+        scanf("%d",&i);
+        switch(i)
+        {
+        case 1:append();
+        break;
+        case 2:length();
+        break;
+        case 4:delet();
+        break;
+        case 5:display();
+        break;
+        case 6:exit(0);
+        break;
+        default:printf("Invalid");
+        break;
+        }
+    }
+}
