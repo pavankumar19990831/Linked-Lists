@@ -1,0 +1,176 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node 
+{
+    int data;
+    struct node*link;
+};
+struct node *front,*rear;int len;
+int length()
+{
+    struct node *temp=front;int c=0;
+    if(front)
+    {
+    while(temp!=rear)
+    {
+        c++;
+        temp=temp->link;
+    }
+    c++;
+    }
+return c;
+}
+void append()
+{
+struct node*temp,*p;
+temp=(struct node*)malloc(sizeof(struct node));
+scanf("%d",&temp->data);
+temp->link=NULL;
+if(front==NULL&&rear==NULL)
+{
+front=temp;
+rear=temp;
+}
+else
+{
+rear->link=temp;
+rear=temp;
+rear->link=front;
+}
+}
+void display()
+{
+    struct node*temp=front;
+    if(front)
+    {
+    while(temp!=rear)
+    {
+        printf("%d ",temp->data);
+      temp=temp->link;  
+    }
+    printf("%d",temp->data);
+    }
+    else
+    {
+        printf("No elements");
+    }
+    printf("\n");
+}
+void addatstart()
+{
+struct node*temp,*p;
+temp=(struct node*)malloc(sizeof(struct node));
+scanf("%d",&temp->data);
+temp->link=NULL;
+if(front==NULL)
+{
+    front=temp;
+    rear=front;
+}
+else  {
+temp->link=front;
+front=temp;
+}
+}
+void addatmiddle()
+{
+struct node*temp,*p=front,*s=front;
+temp=(struct node*)malloc(sizeof(struct node));
+int i;
+scanf("%d",&i);
+len=length();
+
+i=i%len;
+    int r=1;
+
+if(i==0)
+{
+    append();
+}
+else if(i==1)
+{
+    addatstart();
+}
+else
+{
+    scanf("%d",&temp->data);
+    while(r<i)
+    {
+        s=p;
+        p=p->link;
+    r++;
+    }
+    
+temp->link=p;
+s->link=temp;
+       
+}
+}
+void delet()
+{
+struct node *temp,*p;
+int i,j=1;
+scanf("%d",&i);
+p=front;
+len=length();
+i=i%len;
+if(i==1)
+{
+    p=p->link;
+    front=NULL;
+    free(front);
+    front=p;
+}
+else if(i==0)
+{
+    while(p->link!=rear)
+    {
+        p=p->link;
+    }
+  p->link=front;
+  rear=NULL;
+  free(rear);
+  rear=p;  
+}
+else
+{
+    temp=front;
+    while(j<i)
+    {
+        p=temp;
+        temp=temp->link;
+        j++;
+    }
+    p->link=temp->link;
+    temp=NULL;
+    free(temp);
+}
+}
+int len;
+int main()
+{
+    int i;
+    while(1)
+    {
+        scanf("%d",&i);
+        switch(i)
+        {
+        case 1:append();
+        break;
+        case 2:length();
+        break;
+        case 4:delet();
+        break;
+        case 5:display();
+        break;
+        case 6:exit(0);
+        break;
+        case 7:addatstart();
+        break;
+        case 8:addatmiddle();
+        break;
+        default:printf("Invalid");
+        break;
+        }
+    }
+}
