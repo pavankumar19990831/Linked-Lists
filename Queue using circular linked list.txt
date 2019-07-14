@@ -1,0 +1,102 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node 
+{
+    int data;
+    struct node*link;
+};
+struct node *front,*rear;int len;
+int length()
+{
+    struct node *temp=front;int c=0;
+    if(front)
+    {
+    while(temp!=rear)
+    {
+        c++;
+        temp=temp->link;
+    }
+    c++;
+    }
+return c;
+}
+void push()
+{
+struct node*temp,*p;
+temp=(struct node*)malloc(sizeof(struct node));
+scanf("%d",&temp->data);
+temp->link=NULL;
+if(front==NULL&&rear==NULL)
+{
+front=temp;
+rear=temp;
+}
+else
+{
+rear->link=temp;
+rear=temp;
+rear->link=front;
+}
+}
+void display()
+{
+    struct node*temp=front;
+    if(front)
+    {
+    while(temp!=rear)
+    {
+        printf("%d ",temp->data);
+      temp=temp->link;  
+    }
+    printf("%d",temp->data);
+    }
+    else
+    {
+        printf("No elements");
+    }
+    printf("\n");
+}
+void pop()
+{
+struct node *temp,*p;
+int i,j=1;
+p=front;
+if(rear!=front)
+{   
+    p=p->link;
+    front=NULL;
+    free(front);
+    front=p;
+}
+else
+ {
+     front=rear=NULL;
+     free(front);free(rear);
+printf("Queue Underflow");
+printf("\n");
+ }
+}
+int len;
+int main()
+{
+    int i;
+    while(1)
+    {
+        scanf("%d",&i);
+        switch(i)
+        {
+        case 1:push();
+        break;
+        case 2:length();
+        break;
+        case 4:pop();
+        break;
+        case 5:display();
+        break;
+        case 6:exit(0);
+        break;
+        default:printf("Invalid");
+        break;
+        }
+    }
+}

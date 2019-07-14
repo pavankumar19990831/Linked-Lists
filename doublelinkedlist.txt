@@ -1,0 +1,170 @@
+#include <assert.h>
+#include <limits.h>
+#include <math.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+struct node 
+{
+    int data;
+    struct node*left,*right;
+};
+struct node *root;int len;
+int length()
+{
+    struct node *temp=root;int c=0;
+    while(temp!=NULL)
+    {
+        c++;
+        temp=temp->right;
+    }
+return c;
+}
+void append()
+{
+struct node*temp,*p;
+temp=(struct node*)malloc(sizeof(struct node));
+scanf("%d",&temp->data);
+temp->left=NULL;
+temp->right=NULL;
+p=root;
+if(root==NULL)
+{
+root=temp;
+}
+else
+{
+while(p->right!=NULL)
+{
+p=p->right;
+}
+temp->left=p;
+p->right=temp;
+}
+}
+void display()
+{
+    struct node*temp=root;
+    while(temp)
+    {
+        printf("%d ",temp->data);
+        temp=temp->right;
+    }
+}
+void addatstart()
+{
+struct node*temp,*p=root;
+temp=(struct node*)malloc(sizeof(struct node));
+scanf("%d",&temp->data);
+temp->left=NULL;
+temp->right=NULL;
+p=root;
+if(root==NULL)
+{
+    root=temp;
+}
+else  {
+temp->right=root;
+root->left=temp;
+root=temp;
+}
+}
+void addatmiddle()
+{
+struct node*temp,*p=root;
+temp=(struct node*)malloc(sizeof(struct node));
+int i;
+scanf("%d%d",&i,&temp->data);
+len=length();
+if(i>len)
+{
+    printf("Not possible");
+}
+else
+{
+    int r=1;
+while(r<i)
+{
+    p=p->right;
+    r++;
+}
+temp->right=p->right;
+p->right->left=temp;
+temp->left=p;
+p->right=temp;
+}
+}
+void delet()
+{
+struct node *temp,*p;
+int i,j=1;
+scanf("%d",&i);
+p=root;
+len=length();
+if(i>len)
+{
+    printf("Not possible");
+}
+else
+{
+    while(j<i)
+{
+    temp=p;
+    p=p->right;
+    j++;
+}
+if(p->right!=NULL)
+{
+    if(j!=1)
+    {
+p->right->left=temp;
+temp->right=p->right;
+    }
+    else
+    {
+        p->right->left=NULL;
+        p=p->right;
+        root=p;
+    }
+p=NULL;
+free(p);
+}
+else
+{
+    temp->right=NULL;
+    p=NULL;free(p);
+}
+
+}
+}
+int len;
+int main()
+{
+    int i;
+    while(1)
+    {
+        scanf("%d",&i);
+        switch(i)
+        {
+        case 1:append();
+        break;
+        case 2:length();
+        break;
+        case 4:delet();
+        break;
+        case 5:display();
+        break;
+        case 6:exit(0);
+        break;
+        case 7:addatstart();
+        break;
+        case 8:addatmiddle();
+        break;
+        default:printf("Invalid");
+        break;
+        }
+    }
+}
